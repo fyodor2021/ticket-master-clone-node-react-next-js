@@ -5,7 +5,7 @@ export default ({req}) => {
   if(typeof window === 'undefined'){
     //must be on the server
     return axios.create({
-      baseURL: 'http://master-ticketing.com',
+      baseURL: 'http://www.master-ticketing.com/',
       headers: req.headers
     });
   }else{
