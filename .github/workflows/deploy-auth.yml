@@ -1,0 +1,20 @@
+name: deploy-auth
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - auth/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd auth && docker build -t causeleea/auth .
+      - run: docker run -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASS
+        env:
+          DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+          DOCKERHUB_PASS: ${{secrets.DOCKERHUB_PASS}}
+      - run: docker push causeleea/auth
