@@ -1,0 +1,48 @@
+name: deploy-client
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - client/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+
+      - name: Build Docker image
+        run: cd client && docker build -t causeleea/client .
+
+      - name: Push Docker image
+        run: docker push causeleea/client
+      
+      - name: installing doctl digital ocean
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN}}
+          
+      - name: cluster configuration 
+        run: doctl kubernetes cluster kubeconfig save ticketingdev
+        
+      - name: restarting deployment
+        run: kubectl rollout restart deployment client-depl
+
+
+
+
+
+
+
+
+
+        
