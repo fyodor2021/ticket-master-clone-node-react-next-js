@@ -5,7 +5,7 @@ export default ({req}) => {
   if(typeof window === 'undefined'){
     //must be on the server
     return axios.create({
-      baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+      baseURL: 'http://master-ticketing.com',
       headers: req.headers
     });
   }else{
@@ -15,3 +15,5 @@ export default ({req}) => {
     });
   }
 }
+
+//http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
