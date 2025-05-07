@@ -24,3 +24,7 @@ jobs:
         
       - name: applying configuration files in infra dir
         run: kubectl apply -f infra/k8s && kubectl apply -f infra/k8s-prod
+
+
+
+
