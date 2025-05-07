@@ -25,3 +25,24 @@ jobs:
 
       - name: Push Docker image
         run: docker push causeleea/auth
+      
+      - name: installing doctl digital ocean
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN}}
+          
+      - name: cluster configuration 
+        run: doctl kubernetes cluster kubeconfig save ticketingdev
+        
+      - name: restarting deployment
+        run: kubectl rollout restart deployment auth-depl
+
+
+
+
+
+
+
+
+
+        
